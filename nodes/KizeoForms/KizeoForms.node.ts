@@ -7,7 +7,7 @@ import { kizeoFormsDataFields, kizeoFormsDataOperations } from './KizeoFormsData
 
 export class KizeoForms implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'KizeoForms',
+		displayName: 'Kizeo Forms',
 		name: 'kizeoForms',
 		icon: 'file:icon.svg',
 		group: ['transform'],
@@ -248,18 +248,31 @@ export class KizeoForms implements INodeType {
 				} else if (operation === 'downloadCustomExportInItsOriginalFormat') {
 					const formId = this.getNodeParameter('form', 0) as string;
 					const exp = this.getNodeParameter('export', 0) as string;
+					const format = this.getNodeParameter('exportInPDF', 0) as boolean;
 					const dataId = this.getNodeParameter('data', 0) as string;
 					const credentials = await this.getCredentials('kizeoFormsApi') as IDataObject;
 
 					const apiKey = credentials.apiKey;
+					let uri = "";
+					let headers = {};
 
-					const options: OptionsWithUri = {
-						uri: `https://forms.kizeo.com/rest/v3/forms/${formId}/data/${dataId}/exports/${exp}?used-with-n8n=`,
-						method: 'GET',
-						headers: {
+					if (format) {
+						uri = `https://forms.kizeo.com/rest/v3/forms/${formId}/data/${dataId}/exports/${exp}/pdf?used-with-n8n=`;
+						headers = {
+							'Accept': 'application/pdf',
+							'Authorization': apiKey
+						};
+					} else {
+						uri = `https://forms.kizeo.com/rest/v3/forms/${formId}/data/${dataId}/exports/${exp}?used-with-n8n=`;
+						headers = {
 							'Accept': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
 							'Authorization': apiKey
-						},
+						};
+					}
+					const options: OptionsWithUri = {
+						uri: uri,
+						method: 'GET',
+						headers: headers,
 						encoding: null,
 						resolveWithFullResponse: true,
 					};

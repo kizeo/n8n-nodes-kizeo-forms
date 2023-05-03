@@ -1,6 +1,5 @@
 import { INodeProperties } from 'n8n-workflow';
 
-// When the resource `httpVerb` is selected, this `operation` parameter will be shown.
 export const kizeoFormsDataOperations: INodeProperties[] = [
 
 	{
@@ -30,8 +29,6 @@ export const kizeoFormsDataOperations: INodeProperties[] = [
 
 ];
 
-// Here we define what to show when the `get` operation is selected.
-// We do that by adding `operation: ["get"]` to `displayOptions.show`
 const pushDataOperation: INodeProperties[] = [
 	{
 		displayName: 'Form Name or ID',
@@ -150,9 +147,6 @@ const getDataDefinitionOperation: INodeProperties[] = [
 
 
 export const kizeoFormsDataFields: INodeProperties[] = [
-	/* -------------------------------------------------------------------------- */
-	/*                                httpVerb:get                                */
-	/* -------------------------------------------------------------------------- */
 	...getDataDefinitionOperation,
 	...pushDataOperation,
 ];
