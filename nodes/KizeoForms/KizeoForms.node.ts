@@ -4,7 +4,7 @@ import { kizeoFormsApiRequest } from './GenericFunctions';
 import { kizeoFormsExportFields, kizeoFormsExportOperations } from './KizeoFormsExportDescription';
 import { kizeoFormsDataFields, kizeoFormsDataOperations } from './KizeoFormsDataDescription';
 
-
+export const endpoint = 'https://forms.kizeo.com/rest/';
 export class KizeoForms implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Kizeo Forms',
@@ -181,7 +181,7 @@ export class KizeoForms implements INodeType {
 					const apiKey = credentials.apiKey;
 
 					const options: OptionsWithUri = {
-						uri: `https://forms.kizeo.com/rest/v3/forms/${formId}/data/${dataId}/pdf?used-with-n8n=`,
+						uri: endpoint + `v3/forms/${formId}/data/${dataId}/pdf?used-with-n8n=`,
 						method: 'GET',
 						headers: {
 							'Accept': 'application/pdf',
@@ -217,7 +217,7 @@ export class KizeoForms implements INodeType {
 					const apiKey = credentials.apiKey;
 
 					const options: OptionsWithUri = {
-						uri: `https://forms.kizeo.com/rest/v3/forms/${formId}/data/${dataId}/exports/${exp}/pdf?used-with-n8n=`,
+						uri: endpoint + `v3/forms/${formId}/data/${dataId}/exports/${exp}/pdf?used-with-n8n=`,
 						method: 'GET',
 						headers: {
 							'Accept': 'application/pdf',
@@ -257,13 +257,13 @@ export class KizeoForms implements INodeType {
 					let headers = {};
 
 					if (format) {
-						uri = `https://forms.kizeo.com/rest/v3/forms/${formId}/data/${dataId}/exports/${exp}/pdf?used-with-n8n=`;
+						uri = endpoint + `v3/forms/${formId}/data/${dataId}/exports/${exp}/pdf?used-with-n8n=`;
 						headers = {
 							'Accept': 'application/pdf',
 							'Authorization': apiKey
 						};
 					} else {
-						uri = `https://forms.kizeo.com/rest/v3/forms/${formId}/data/${dataId}/exports/${exp}?used-with-n8n=`;
+						uri = endpoint + `v3/forms/${formId}/data/${dataId}/exports/${exp}?used-with-n8n=`;
 						headers = {
 							'Accept': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
 							'Authorization': apiKey

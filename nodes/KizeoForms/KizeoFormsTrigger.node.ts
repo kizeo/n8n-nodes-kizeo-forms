@@ -104,10 +104,10 @@ export class KizeoFormsTrigger implements INodeType {
 			async checkExists(this: IHookFunctions): Promise<boolean> {
 				// const webhookData = this.getWorkflowStaticData('node');
 				// const webhookUrl = this.getNodeWebhookUrl('default');
-				// const event = this.getNodeParameter('event') as string;
-				// const { hooks: webhooks } = await kizeoFormsApiRequest.call(this, 'GET', '/hooks');
+				// const event = this.getNodeParameter('event_types') as string;
+				// const { hooks: webhooks } = await kizeoFormsApiRequest.call(this, 'GET', '/list');
 				// for (const webhook of webhooks) {
-				//     if (webhook.target_url === webhookUrl && webhook.event === snakeCase(event)) {
+				//     if (webhook.settings.other.url === webhookUrl && webhook.settings.on_events === event)) {
 				//         webhookData.webhookId = webhook.hook_id;
 				//         return true;
 				//     }
@@ -125,7 +125,7 @@ export class KizeoFormsTrigger implements INodeType {
 					url: webhookUrl,
 					httpVerb: 'POST',
 					bodyContentChoice: 'json_v4',
-					third_party: 'n8n',
+					third_party: 'n8n ' + this.getWorkflow().id,
 				};
 				const webhook = await kizeoFormsApiRequest.call(
 					this,

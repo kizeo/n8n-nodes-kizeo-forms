@@ -13,13 +13,15 @@ import {
     IWebhookFunctions,
 } from 'n8n-workflow';
 
+import {
+    endpoint
+} from './KizeoForms.node';
+
 export async function kizeoFormsApiRequest(this: IExecuteFunctions | IWebhookFunctions | IHookFunctions | ILoadOptionsFunctions, method: string, resource: string, body: any = {}, query: IDataObject = {}, uri?: string, option: IDataObject = {}): Promise<any> {
 
     const credentials = await this.getCredentials('kizeoFormsApi') as IDataObject;
 
     const apiKey = credentials.apiKey;
-
-    const endpoint = 'https://forms.kizeo.com/rest/';
 
     const options: OptionsWithUri = {
         headers: {
@@ -42,7 +44,6 @@ export async function kizeoFormsApiRequest(this: IExecuteFunctions | IWebhookFun
         delete options.qs;
     }
 
-    console.log(options);
     try {
         return await this.helpers.request!(options);
     } catch (error) {
