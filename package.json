@@ -1,20 +1,27 @@
 {
-  "name": "n8n-nodes-kizeoforms",
+  "name": "n8n-nodes-kizeo-forms",
   "version": "0.1.0",
-  "description": "1221",
+  "description": "This is an n8n community node. It lets you use Kizeo Forms in your n8n workflows.",
   "keywords": [
-    "n8n-community-node-package"
+    "n8n-community-node-package",
+    "n8n", 
+    "node", 
+    "forms",
+    "kizeo", 
+    "kizeo-forms",
+    "kizeoforms",
+    "n8n-node"
   ],
   "protocol": "https",
   "license": "MIT",
-  "homepage": "https://n8n.io",
+  "homepage": "https://github.com/kizeo/n8n-nodes-kizeo-forms",
   "author": {
-    "name": "Test",
-    "email": "test@example.com"
+    "name": "kizeodotcom",
+    "url": "https://www.kizeo.com"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/BastienMe/n8nForms"
+    "url": "git+https://github.com/kizeo/n8n-nodes-kizeo-forms"
   },
   "main": "index.js",
   "scripts": {
