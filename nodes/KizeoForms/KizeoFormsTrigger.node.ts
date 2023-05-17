@@ -102,17 +102,24 @@ export class KizeoFormsTrigger implements INodeType {
 	webhookMethods = {
 		default: {
 			async checkExists(this: IHookFunctions): Promise<boolean> {
-				// const webhookData = this.getWorkflowStaticData('node');
+				const webhookData = this.getWorkflowStaticData('node');
 				// const webhookUrl = this.getNodeWebhookUrl('default');
-				// const event = this.getNodeParameter('event_types') as string;
-				// const { hooks: webhooks } = await kizeoFormsApiRequest.call(this, 'GET', '/list');
-				// for (const webhook of webhooks) {
-				//     if (webhook.settings.other.url === webhookUrl && webhook.settings.on_events === event)) {
-				//         webhookData.webhookId = webhook.hook_id;
-				//         return true;
-				//     }
-				// }
-				// return false;
+				const event = this.getNodeParameter('event_types') as string;
+				const formId = this.getNodeParameter('form') as string;
+				const { data } = await kizeoFormsApiRequest.call(this, 'GET', `public/v4/forms/${formId}/third_party_webhooks/list`);
+				for (const webhook of data) {
+					console.log(this.getWorkflow().id, event.toString(), webhook.third_party, formId)
+					console.log(webhook.third_party_id, webhook.settings.on_events.toString(), webhook.third_party, webhook.form_id)
+					if (webhook.third_party_id === this.getWorkflow().id
+						&& webhook.settings.on_events.toString() === event.toString()
+						&& webhook.third_party == 'n8n'
+						&& webhook.form_id == formId) {
+
+						webhookData.webhookId = webhook.id;
+
+						return true;
+					}
+				}
 				return false;
 			},
 			async create(this: IHookFunctions): Promise<boolean> {
@@ -123,9 +130,10 @@ export class KizeoFormsTrigger implements INodeType {
 				const body: IDataObject = {
 					on_events: event,
 					url: webhookUrl,
-					httpVerb: 'POST',
-					bodyContentChoice: 'json_v4',
-					third_party: 'n8n ' + this.getWorkflow().id,
+					http_verb: 'POST',
+					body_content_choice: 'json_v4',
+					third_party: 'n8n',
+					third_party_id: this.getWorkflow().id,
 				};
 				const webhook = await kizeoFormsApiRequest.call(
 					this,

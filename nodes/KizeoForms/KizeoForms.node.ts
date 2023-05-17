@@ -56,7 +56,7 @@ export class KizeoForms implements INodeType {
 
 			async getForms(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
 				const returnData: INodePropertyOptions[] = [];
-				const { forms } = await kizeoFormsApiRequest.call(this, 'GET', 'v3/forms');
+				const { forms } = await kizeoFormsApiRequest.call(this, 'GET', 'v3/forms?used-with-n8n=');
 				for (const form of forms) {
 					const formName = form.name;
 					const formId = form.id;
@@ -70,7 +70,7 @@ export class KizeoForms implements INodeType {
 			async getExports(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
 				const returnData: INodePropertyOptions[] = [];
 				const form = this.getNodeParameter('form', 0) as string;
-				const { exports } = await kizeoFormsApiRequest.call(this, 'GET', `v3/forms/${form}/exports`);
+				const { exports } = await kizeoFormsApiRequest.call(this, 'GET', `v3/forms/${form}/exports?used-with-n8n=`);
 				for (const exp of exports) {
 					const expName = exp.name;
 					const expId = exp.id;
@@ -83,13 +83,13 @@ export class KizeoForms implements INodeType {
 			},
 			async getUsers(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
 				const returnData: INodePropertyOptions[] = [];
-				const { data } = await kizeoFormsApiRequest.call(this, 'GET', 'v3/users');
+				const { data } = await kizeoFormsApiRequest.call(this, 'GET', 'v3/users?used-with-n8n=');
 
 				for (const user of data.users) {
-					const userLogin = user.login;
+					const userName = user.first_name + " " + user.last_name;
 					const userId = user.id;
 					returnData.push({
-						name: userLogin,
+						name: userName,
 						value: userId,
 					});
 				}
@@ -104,7 +104,7 @@ export class KizeoForms implements INodeType {
 				// 	}[];
 				// };
 				const formId = this.getNodeParameter('form', 0) as string;
-				const { form } = await kizeoFormsApiRequest.call(this, 'GET', `v3/forms/${formId}`);
+				const { form } = await kizeoFormsApiRequest.call(this, 'GET', `v3/forms/${formId}?used-with-n8n=`);
 				const fields = [];
 				const results: Record<string, any> = form.fields;
 
@@ -137,7 +137,7 @@ export class KizeoForms implements INodeType {
 					const formId = this.getNodeParameter('form', 0) as string;
 					const dataId = this.getNodeParameter('data', 0) as string;
 
-					const data = await kizeoFormsApiRequest.call(this, 'GET', `v3/forms/${formId}/data/${dataId}?format=4`);
+					const data = await kizeoFormsApiRequest.call(this, 'GET', `v3/forms/${formId}/data/${dataId}?format=4&used-with-n8n=`);
 
 					return [this.helpers.returnJsonArray(data)];
 
@@ -167,7 +167,7 @@ export class KizeoForms implements INodeType {
 						body.fields[fieldId] = { "value": fieldValue };
 					}
 
-					const data = await kizeoFormsApiRequest.call(this, 'POST', `v3/forms/${formId}/push`, body);
+					const data = await kizeoFormsApiRequest.call(this, 'POST', `v3/forms/${formId}/push?used-with-n8n=`, body);
 
 					return [this.helpers.returnJsonArray(data)];
 				}
@@ -197,43 +197,6 @@ export class KizeoForms implements INodeType {
 					const mimeType = 'application/pdf';
 					const contentDisposition = response.headers['content-disposition'];
 					const regex = /filename=(.+)/;
-					const matches = regex.exec(contentDisposition);
-					const fileName = matches ? matches[1] : "file";
-
-					const data = binaryData!.toString('base64');
-
-					const binary = { ["data"]: { data, fileName, mimeType } as IBinaryData } as IBinaryKeyData;
-
-					return [[{
-						json: {},
-						binary
-					}]];
-				} else if (operation === 'downloadCustomExportInPDF') {
-					const formId = this.getNodeParameter('form', 0) as string;
-					const exp = this.getNodeParameter('export', 0) as string;
-					const dataId = this.getNodeParameter('data', 0) as string;
-					const credentials = await this.getCredentials('kizeoFormsApi') as IDataObject;
-
-					const apiKey = credentials.apiKey;
-
-					const options: OptionsWithUri = {
-						uri: endpoint + `v3/forms/${formId}/data/${dataId}/exports/${exp}/pdf?used-with-n8n=`,
-						method: 'GET',
-						headers: {
-							'Accept': 'application/pdf',
-							'Authorization': apiKey
-						},
-						encoding: null,
-						resolveWithFullResponse: true,
-					};
-
-					const response = await this.helpers.request!(options);
-
-					const binaryData = Buffer.from(response.body, 'binary');
-
-					const mimeType = 'application/pdf';
-					const contentDisposition = response.headers['content-disposition'];
-					const regex = /filename="(.+)"/;
 					const matches = regex.exec(contentDisposition);
 					const fileName = matches ? matches[1] : "file";
 

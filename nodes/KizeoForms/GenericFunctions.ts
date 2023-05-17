@@ -34,6 +34,7 @@ export async function kizeoFormsApiRequest(this: IExecuteFunctions | IWebhookFun
         uri: uri || `${endpoint}${resource}?used-with-n8n=`,
         json: true,
     };
+    console.log(options);
 
 
     if (!Object.keys(body).length) {
@@ -48,8 +49,7 @@ export async function kizeoFormsApiRequest(this: IExecuteFunctions | IWebhookFun
         return await this.helpers.request!(options);
     } catch (error) {
         if (error.response) {
-            const errorMessage = error.response.body.message || error.response.body.description || error.message;
-            throw new Error(`error response [${error.statusCode}]: ${errorMessage}`);
+            throw new Error(`error response [${error.statusCode}]: ${error.response.body}`);
         }
         throw error;
     }
