@@ -1,7 +1,5 @@
 # n8n-nodes-kizeo-forms
-<div style="background-color: white; padding 5px">
 ![Kizeo Forms logo](https://www.kizeo-forms.com/wp-content/uploads/2022/02/Kizeo-Forms-Logo-02.svg)
-</div>
 ![Banner image](https://www.kizeo-forms.com/wp-content/uploads/2019/10/Digitalisez-votre-activite.jpg)
 
 This is an n8n community node. It lets you use Kizeo Forms in your n8n workflows.
