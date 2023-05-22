@@ -2,7 +2,9 @@ import { IBinaryData, IBinaryKeyData, IDataObject, IExecuteFunctions, ILoadOptio
 import { OptionsWithUri } from 'request-promise-native';
 import { kizeoFormsApiRequest } from './GenericFunctions';
 import { kizeoFormsExportFields, kizeoFormsExportOperations } from './KizeoFormsExportDescription';
-import { kizeoFormsDataFields, kizeoFormsDataOperations } from './KizeoFormsDataDescription';
+import { kizeoFormsFormDataFields as kizeoFormsFormDataFields, kizeoFormsFormDataOperations } from './KizeoFormsFormDataDescription';
+import { kizeoFormsAdvancedListsFields, kizeoFormsAdvancedListsOperations } from './KizeoFormsAdvancedListsDescription';
+import { kizeoFormsFormsFields, kizeoFormsFormsOperations } from './KizeoFormsFormsDescription';
 
 export const endpoint = 'https://forms.kizeo.com/rest/';
 export class KizeoForms implements INodeType {
@@ -34,20 +36,33 @@ export class KizeoForms implements INodeType {
 				noDataExpression: true,
 				options: [
 					{
-						name: 'Data',
-						value: 'data',
+						name: 'Form Data',
+						value: 'formData',
 					},
 					{
 						name: 'Export',
 						value: 'export',
 					},
+					{
+						name: 'Advanced Lists',
+						value: 'advancedLists',
+					},
+					{
+						name: 'Forms',
+						value: 'forms',
+					},
 				],
-				default: 'data',
+				default: 'formData',
 			},
 			...kizeoFormsExportOperations,
 			...kizeoFormsExportFields,
-			...kizeoFormsDataOperations,
-			...kizeoFormsDataFields,
+			...kizeoFormsFormDataOperations,
+			...kizeoFormsFormDataFields,
+			...kizeoFormsAdvancedListsOperations,
+			...kizeoFormsAdvancedListsFields,
+			...kizeoFormsFormsOperations,
+			...kizeoFormsFormsFields
+
 		],
 	};
 
@@ -121,6 +136,35 @@ export class KizeoForms implements INodeType {
 				}
 				return fields;
 			},
+			async getList(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+				const returnData: INodePropertyOptions[] = [];
+				const { lists } = await kizeoFormsApiRequest.call(this, 'GET', 'v3/lists?used-with-n8n=');
+				for (const list of lists) {
+					const listName = list.name;
+					const listId = list.id;
+					returnData.push({
+						name: listName,
+						value: listId,
+					});
+				}
+				return returnData;
+			},
+			async getListProperties(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+				const listId = this.getNodeParameter('list', 0) as string;
+				const { properties_definition } = await kizeoFormsApiRequest.call(this, 'GET', `public/v4/lists/${listId}/definition?used-with-n8n=`);
+				const properties = [];
+				const results: Record<string, any> = properties_definition;
+
+				for (let i = 0; i < Object.keys(results).length; i++) {
+					const propertyId = Object.keys(results)[i];
+					properties.push({
+						name: Object.values(results)[i].display_name,
+						value: propertyId,
+					});
+
+				}
+				return properties;
+			},
 		}
 	};
 
@@ -132,7 +176,7 @@ export class KizeoForms implements INodeType {
 
 		const returnData: IDataObject[] = [];
 		for (let i = 0; i < items.length; i++) {
-			if (resource === 'data') {
+			if (resource === 'formData') {
 				if (operation === 'getDataDefinition') {
 					const formId = this.getNodeParameter('form', 0) as string;
 					const dataId = this.getNodeParameter('data', 0) as string;
@@ -257,6 +301,134 @@ export class KizeoForms implements INodeType {
 						json: {},
 						binary
 					}]];
+				}
+			}
+			if (resource === "advancedLists") {
+				if (operation === "getListDefinition") {
+					const listId = this.getNodeParameter('list', 0) as string;
+
+					const data = await kizeoFormsApiRequest.call(this, 'GET', `public/v4/lists/${listId}/definition?used-with-n8n=`);
+
+					return [this.helpers.returnJsonArray(data)];
+				}
+				else if (operation === "getItem") {
+					const listId = this.getNodeParameter('list', 0) as string;
+					const itemId = this.getNodeParameter('item', 0) as string;
+
+					const data = await kizeoFormsApiRequest.call(this, 'GET', `public/v4/lists/${listId}/items/${itemId}?used-with-n8n=`);
+
+					return [this.helpers.returnJsonArray(data)];
+				}
+				else if (operation === "createListItem") {
+					const listId = this.getNodeParameter('list', 0) as string;
+					const itemLabel = this.getNodeParameter('itemLabel', 0) as string;
+					const properties = this.getNodeParameter('properties', 0) as {
+						properties: {
+							property: string;
+							value: string;
+						}[];
+					};
+
+					type Body = {
+						items: [
+							{
+								label: string;
+								properties: Record<string, string | number>;
+							}
+						]
+					};
+
+					const body: Body = {
+						items: [
+							{
+								'label': itemLabel,
+								properties: {},
+							}
+						]
+					};
+
+					for (const property of properties.properties) {
+						const propertyId = property.property;
+						const propertyValue = property.value;
+						body.items[0].properties[propertyId] = parseFloat(propertyValue) ? parseFloat(propertyValue) : propertyValue;
+					}
+					const data = await kizeoFormsApiRequest.call(this, 'POST', `public/v4/lists/${listId}/items?used-with-n8n=`, body);
+
+					return [this.helpers.returnJsonArray(data)];
+				}
+				else if (operation === "getAllListItems") {
+					const listId = this.getNodeParameter('list', 0) as string;
+					const search = this.getNodeParameter('search', 0) as string;
+					const offset = this.getNodeParameter('offset', 0) as number;
+					const limit = this.getNodeParameter('limit', 0) as number;
+					const sort = this.getNodeParameter('sort', 0) as string;
+					const direction = this.getNodeParameter('direction', 0) as string;
+
+					let parameters = ''
+					if (search) parameters += `search=${search}&`;
+					if (offset) parameters += `offset=${offset}&`;
+					if (limit) parameters += `limit=${limit}&`;
+					if (sort) parameters += `sort=${sort}&`;
+					if (direction) parameters += `direction=${direction}&`;
+
+					const data = await kizeoFormsApiRequest.call(this, 'GET', `public/v4/lists/${listId}/items?${parameters}used-with-n8n=`);
+
+					return [this.helpers.returnJsonArray(data)];
+				}
+				else if (operation === "editListItem") {
+					const listId = this.getNodeParameter('list', 0) as string;
+					const itemId = this.getNodeParameter('item', 0) as string;
+					const itemLabel = this.getNodeParameter('itemLabel', 0) as string;
+					const properties = this.getNodeParameter('properties', 0) as {
+						properties: {
+							property: string;
+							value: string;
+						}[];
+					};
+
+					type Body = {
+						items: [
+							{
+								item_id: string;
+								label: string;
+								properties: Record<string, string | number>;
+							}
+						]
+					};
+
+					const body: Body = {
+						items: [
+							{
+								'item_id': itemId,
+								'label': itemLabel,
+								properties: {},
+							}
+						]
+					};
+
+					for (const property of properties.properties) {
+						const propertyId = property.property;
+						const propertyValue = property.value;
+						body.items[0].properties[propertyId] = parseFloat(propertyValue) ? parseFloat(propertyValue) : propertyValue;
+					}
+					const data = await kizeoFormsApiRequest.call(this, 'PATCH', `public/v4/lists/${listId}/items?used-with-n8n=`, body);
+
+					return [this.helpers.returnJsonArray(data)];
+				}
+				else if (operation === "deleteListItem") {
+					const listId = this.getNodeParameter('list', 0) as string;
+					const itemId = this.getNodeParameter('item', 0) as string;
+
+					const data = await kizeoFormsApiRequest.call(this, 'DELETE', `public/v4/lists/${listId}/items/${itemId}?used-with-n8n=`);
+
+					return [this.helpers.returnJsonArray(data)];
+				}
+			}
+			if (resource === "forms") {
+				if (operation === "getAllForms") {
+					const data = await kizeoFormsApiRequest.call(this, 'GET', `v3/forms?used-with-n8n=`);
+
+					return [this.helpers.returnJsonArray(data)];
 				}
 			}
 		}

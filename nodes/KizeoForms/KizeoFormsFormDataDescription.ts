@@ -1,6 +1,6 @@
 import { INodeProperties } from 'n8n-workflow';
 
-export const kizeoFormsDataOperations: INodeProperties[] = [
+export const kizeoFormsFormDataOperations: INodeProperties[] = [
 
 	{
 		displayName: 'Operation',
@@ -9,7 +9,7 @@ export const kizeoFormsDataOperations: INodeProperties[] = [
 		noDataExpression: true,
 		displayOptions: {
 			show: {
-				resource: ['data'],
+				resource: ['formData'],
 			},
 		},
 		options: [
@@ -42,7 +42,7 @@ const pushDataOperation: INodeProperties[] = [
 		},
 		displayOptions: {
 			show: {
-				resource: ['data'],
+				resource: ['formData'],
 				operation: ['pushData'],
 			},
 		},
@@ -59,7 +59,7 @@ const pushDataOperation: INodeProperties[] = [
 		},
 		displayOptions: {
 			show: {
-				resource: ['data'],
+				resource: ['formData'],
 				operation: ['pushData'],
 			},
 		},
@@ -103,7 +103,7 @@ const pushDataOperation: INodeProperties[] = [
 		],
 		displayOptions: {
 			show: {
-				resource: ['data'],
+				resource: ['formData'],
 				operation: ['pushData'],
 			},
 		},
@@ -123,7 +123,7 @@ const getDataDefinitionOperation: INodeProperties[] = [
 		},
 		displayOptions: {
 			show: {
-				resource: ['data'],
+				resource: ['formData'],
 				operation: ['getDataDefinition'],
 			},
 		},
@@ -137,7 +137,7 @@ const getDataDefinitionOperation: INodeProperties[] = [
 		description: 'Data ID',
 		displayOptions: {
 			show: {
-				resource: ['data'],
+				resource: ['formData'],
 				operation: ['getDataDefinition'],
 			},
 		},
@@ -146,7 +146,7 @@ const getDataDefinitionOperation: INodeProperties[] = [
 
 
 
-export const kizeoFormsDataFields: INodeProperties[] = [
+export const kizeoFormsFormDataFields: INodeProperties[] = [
 	...getDataDefinitionOperation,
 	...pushDataOperation,
 ];

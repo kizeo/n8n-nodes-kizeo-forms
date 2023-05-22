@@ -31,7 +31,7 @@ export async function kizeoFormsApiRequest(this: IExecuteFunctions | IWebhookFun
         method,
         body,
         qs: query,
-        uri: uri || `${endpoint}${resource}?used-with-n8n=`,
+        uri: uri || `${endpoint}${resource}`,
         json: true,
     };
     console.log(options);
