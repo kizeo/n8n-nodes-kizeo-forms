@@ -1,5 +1,6 @@
 # n8n-nodes-kizeo-forms
-![Banner image](https://user-images.githubusercontent.com/10284570/173569848-c624317f-42b1-45a6-ab09-f0ea3c247648.png)
+![Kizeo Forms logo](https://www.kizeo-forms.com/wp-content/uploads/2022/02/Kizeo-Forms-Logo-02.svg)
+![Banner image](https://www.kizeo-forms.com/wp-content/uploads/2019/10/Digitalisez-votre-activite.jpg)
 
 This is an n8n community node. It lets you use Kizeo Forms in your n8n workflows.
 
@@ -24,6 +25,8 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 - Retrieve data from Kizeo Forms (with webhooks or manually)
 - Download exports
 - Send pushed data to users
+- (Coming later) : Operations on lists
+- (Coming later) : Operations en forms
 
 ## Credentials
 
@@ -37,7 +40,7 @@ Tested on version 0.224 of n8n self hosted and desktop.
 ## Resources
 
 * [n8n community nodes documentation](https://docs.n8n.io/integrations/community-nodes/)
-* _Link to app/service documentation._
+* [Kizeo Forms documentation](https://www.kizeo-forms.com/)
 
 ## Version history
 
