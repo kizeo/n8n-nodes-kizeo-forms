@@ -1,7 +1,6 @@
 import { INodeProperties } from 'n8n-workflow';
 
 export const kizeoFormsFormsOperations: INodeProperties[] = [
-
 	{
 		displayName: 'Operation',
 		name: 'operation',
@@ -21,10 +20,6 @@ export const kizeoFormsFormsOperations: INodeProperties[] = [
 		],
 		default: 'getAllForms',
 	},
-
 ];
 
-
-export const kizeoFormsFormsFields: INodeProperties[] = [
-
-];
+export const kizeoFormsFormsFields: INodeProperties[] = [];

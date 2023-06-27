@@ -44,7 +44,8 @@ export class KizeoFormsTrigger implements INodeType {
 				displayName: 'Form Name or ID',
 				name: 'form',
 				type: 'options',
-				description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
+				description:
+					'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
 				required: true,
 				default: '',
 				typeOptions: {
@@ -106,15 +107,25 @@ export class KizeoFormsTrigger implements INodeType {
 				// const webhookUrl = this.getNodeWebhookUrl('default');
 				const event = this.getNodeParameter('event_types') as string;
 				const formId = this.getNodeParameter('form') as string;
-				const { data } = await kizeoFormsApiRequest.call(this, 'GET', `public/v4/forms/${formId}/third_party_webhooks/list`);
+				const { data } = await kizeoFormsApiRequest.call(
+					this,
+					'GET',
+					`public/v4/forms/${formId}/third_party_webhooks/list`,
+				);
 				for (const webhook of data) {
-					console.log(this.getWorkflow().id, event.toString(), webhook.third_party, formId)
-					console.log(webhook.third_party_id, webhook.settings.on_events.toString(), webhook.third_party, webhook.form_id)
-					if (webhook.third_party_id === this.getWorkflow().id
-						&& webhook.settings.on_events.toString() === event.toString()
-						&& webhook.third_party == 'n8n'
-						&& webhook.form_id == formId) {
-
+					console.log(this.getWorkflow().id, event.toString(), webhook.third_party, formId);
+					console.log(
+						webhook.third_party_id,
+						webhook.settings.on_events.toString(),
+						webhook.third_party,
+						webhook.form_id,
+					);
+					if (
+						webhook.third_party_id === this.getWorkflow().id &&
+						webhook.settings.on_events.toString() === event.toString() &&
+						webhook.third_party == 'n8n' &&
+						webhook.form_id == formId
+					) {
 						webhookData.webhookId = webhook.id;
 
 						return true;

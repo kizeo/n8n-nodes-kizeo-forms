@@ -1,7 +1,6 @@
 import { INodeProperties } from 'n8n-workflow';
 
 export const kizeoFormsAdvancedListsOperations: INodeProperties[] = [
-
 	{
 		displayName: 'Operation',
 		name: 'operation',
@@ -46,7 +45,6 @@ export const kizeoFormsAdvancedListsOperations: INodeProperties[] = [
 		],
 		default: 'getListDefinition',
 	},
-
 ];
 
 const getListDefinitionOperation: INodeProperties[] = [
@@ -54,7 +52,8 @@ const getListDefinitionOperation: INodeProperties[] = [
 		displayName: 'List ID',
 		name: 'list',
 		type: 'options',
-		description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
+		description:
+			'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
 		required: true,
 		default: '',
 		typeOptions: {
@@ -74,7 +73,8 @@ const getItemOperation: INodeProperties[] = [
 		displayName: 'List ID',
 		name: 'list',
 		type: 'options',
-		description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
+		description:
+			'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
 		required: true,
 		default: '',
 		typeOptions: {
@@ -108,7 +108,8 @@ const createListItemOperation: INodeProperties[] = [
 		displayName: 'List ID',
 		name: 'list',
 		type: 'options',
-		description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
+		description:
+			'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
 		required: true,
 		default: '',
 		typeOptions: {
@@ -159,7 +160,8 @@ const createListItemOperation: INodeProperties[] = [
 						},
 						required: true,
 						default: '',
-						description: 'Property Name or ID. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>.'
+						description:
+							'Property Name or ID. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>.',
 					},
 					{
 						displayName: 'Value',
@@ -167,10 +169,10 @@ const createListItemOperation: INodeProperties[] = [
 						type: 'string',
 						required: true,
 						default: '',
-						description: 'Item property value'
-					}
-				]
-			}
+						description: 'Item property value',
+					},
+				],
+			},
 		],
 		displayOptions: {
 			show: {
@@ -186,7 +188,8 @@ const getAllListItemsOperation: INodeProperties[] = [
 		displayName: 'List ID',
 		name: 'list',
 		type: 'options',
-		description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
+		description:
+			'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
 		required: true,
 		default: '',
 		typeOptions: {
@@ -269,7 +272,6 @@ const getAllListItemsOperation: INodeProperties[] = [
 			},
 		},
 	},
-
 ];
 
 const editListItemOperation: INodeProperties[] = [
@@ -277,7 +279,8 @@ const editListItemOperation: INodeProperties[] = [
 		displayName: 'List ID',
 		name: 'list',
 		type: 'options',
-		description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
+		description:
+			'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
 		required: true,
 		default: '',
 		typeOptions: {
@@ -342,7 +345,8 @@ const editListItemOperation: INodeProperties[] = [
 						},
 						required: true,
 						default: '',
-						description: 'Property Name or ID. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>.'
+						description:
+							'Property Name or ID. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>.',
 					},
 					{
 						displayName: 'Value',
@@ -350,10 +354,10 @@ const editListItemOperation: INodeProperties[] = [
 						type: 'string',
 						required: true,
 						default: '',
-						description: 'Item property value'
-					}
-				]
-			}
+						description: 'Item property value',
+					},
+				],
+			},
 		],
 		displayOptions: {
 			show: {
@@ -369,7 +373,8 @@ const deleteListItemOperation: INodeProperties[] = [
 		displayName: 'List ID',
 		name: 'list',
 		type: 'options',
-		description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
+		description:
+			'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
 		required: true,
 		default: '',
 		typeOptions: {
@@ -398,14 +403,11 @@ const deleteListItemOperation: INodeProperties[] = [
 	},
 ];
 
-
-
 export const kizeoFormsAdvancedListsFields: INodeProperties[] = [
 	...getListDefinitionOperation,
 	...getItemOperation,
 	...createListItemOperation,
 	...getAllListItemsOperation,
 	...editListItemOperation,
-	...deleteListItemOperation
-
+	...deleteListItemOperation,
 ];

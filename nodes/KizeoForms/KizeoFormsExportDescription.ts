@@ -1,7 +1,6 @@
 import { INodeProperties } from 'n8n-workflow';
 
 export const kizeoFormsExportOperations: INodeProperties[] = [
-
 	{
 		displayName: 'Operation',
 		name: 'operation',
@@ -26,7 +25,6 @@ export const kizeoFormsExportOperations: INodeProperties[] = [
 		],
 		default: 'downloadStandardPDF',
 	},
-
 ];
 
 const downloadStandardPDFOperation: INodeProperties[] = [
@@ -34,7 +32,8 @@ const downloadStandardPDFOperation: INodeProperties[] = [
 		displayName: 'Form Name or ID',
 		name: 'form',
 		type: 'options',
-		description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
+		description:
+			'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
 		required: true,
 		default: '',
 		typeOptions: {
@@ -68,7 +67,8 @@ const downloadCustomExportInItsOriginalFormatOperation: INodeProperties[] = [
 		displayName: 'Form Name or ID',
 		name: 'form',
 		type: 'options',
-		description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
+		description:
+			'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
 		required: true,
 		default: '',
 		typeOptions: {
@@ -85,7 +85,8 @@ const downloadCustomExportInItsOriginalFormatOperation: INodeProperties[] = [
 		displayName: 'Export Name or ID',
 		name: 'export',
 		type: 'options',
-		description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
+		description:
+			'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
 		required: true,
 		default: '',
 		typeOptions: {
@@ -127,9 +128,6 @@ const downloadCustomExportInItsOriginalFormatOperation: INodeProperties[] = [
 		},
 	},
 ];
-
-
-
 
 export const kizeoFormsExportFields: INodeProperties[] = [
 	...downloadStandardPDFOperation,

@@ -1,7 +1,6 @@
 import { INodeProperties } from 'n8n-workflow';
 
 export const kizeoFormsFormDataOperations: INodeProperties[] = [
-
 	{
 		displayName: 'Operation',
 		name: 'operation',
@@ -26,7 +25,6 @@ export const kizeoFormsFormDataOperations: INodeProperties[] = [
 		],
 		default: 'getDataDefinition',
 	},
-
 ];
 
 const pushDataOperation: INodeProperties[] = [
@@ -34,7 +32,8 @@ const pushDataOperation: INodeProperties[] = [
 		displayName: 'Form Name or ID',
 		name: 'form',
 		type: 'options',
-		description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
+		description:
+			'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
 		required: true,
 		default: '',
 		typeOptions: {
@@ -51,7 +50,8 @@ const pushDataOperation: INodeProperties[] = [
 		displayName: 'User Name or ID',
 		name: 'user',
 		type: 'options',
-		description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
+		description:
+			'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
 		required: true,
 		default: '',
 		typeOptions: {
@@ -88,7 +88,8 @@ const pushDataOperation: INodeProperties[] = [
 						},
 						required: true,
 						default: '',
-						description: 'Field to be pushed. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>.'
+						description:
+							'Field to be pushed. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>.',
 					},
 					{
 						displayName: 'Value',
@@ -96,10 +97,10 @@ const pushDataOperation: INodeProperties[] = [
 						type: 'string',
 						required: true,
 						default: '',
-						description: 'Value to push field with'
-					}
-				]
-			}
+						description: 'Value to push field with',
+					},
+				],
+			},
 		],
 		displayOptions: {
 			show: {
@@ -115,7 +116,8 @@ const getDataDefinitionOperation: INodeProperties[] = [
 		displayName: 'Form Name or ID',
 		name: 'form',
 		type: 'options',
-		description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
+		description:
+			'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
 		required: true,
 		default: '',
 		typeOptions: {
@@ -143,8 +145,6 @@ const getDataDefinitionOperation: INodeProperties[] = [
 		},
 	},
 ];
-
-
 
 export const kizeoFormsFormDataFields: INodeProperties[] = [
 	...getDataDefinitionOperation,
