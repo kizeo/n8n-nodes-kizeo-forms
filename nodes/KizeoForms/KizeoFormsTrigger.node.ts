@@ -16,7 +16,7 @@ export class KizeoFormsTrigger implements INodeType {
 		displayName: 'Event On Data Trigger',
 		name: 'kizeoFormsTrigger',
 		group: ['trigger'],
-		version: 1,
+		version: 2,
 		icon: 'file:icon.svg',
 		subtitle: '={{$parameter["event_types"]}}',
 		description: 'Handle EventOnData events via webhooks',

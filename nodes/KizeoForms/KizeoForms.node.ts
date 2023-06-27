@@ -29,7 +29,7 @@ export class KizeoForms implements INodeType {
 		name: 'kizeoForms',
 		icon: 'file:icon.svg',
 		group: ['transform'],
-		version: 1,
+		version: 2,
 		subtitle: '={{ $parameter["operation"] + ": " + $parameter["resource"] }}',
 		description: 'Interact with KizoForms API',
 		defaults: {

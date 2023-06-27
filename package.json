@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-kizeo-forms",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "This is an n8n community node. It lets you use Kizeo Forms in your n8n workflows.",
   "keywords": [
     "n8n-community-node-package",
@@ -39,7 +39,7 @@
     "description": "Kizeo Forms"
   },
   "n8n": {
-    "n8nNodesApiVersion": 1,
+    "n8nNodesApiVersion": 2,
     "credentials": [
       "dist/credentials/KizeoFormsApi.credentials.js"
     ],
