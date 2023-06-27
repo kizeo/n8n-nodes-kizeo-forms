@@ -13,24 +13,14 @@ export const kizeoFormsAdvancedListsOperations: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'GetListDefinition',
-				value: 'getListDefinition',
-				action: 'Get the definition of a list',
-			},
-			{
-				name: 'GetItem',
-				value: 'getItem',
-				action: 'Get an item from a list',
-			},
-			{
 				name: 'CreateListItem',
 				value: 'createListItem',
 				action: 'Create list item',
 			},
 			{
-				name: 'GetAllListItems',
-				value: 'getAllListItems',
-				action: 'List all items of given list',
+				name: 'DeleteListItem',
+				value: 'deleteListItem',
+				action: 'Delete an item from a list',
 			},
 			{
 				name: 'EditListItem',
@@ -38,9 +28,19 @@ export const kizeoFormsAdvancedListsOperations: INodeProperties[] = [
 				action: 'Edit an item from a list',
 			},
 			{
-				name: 'DeleteListItem',
-				value: 'deleteListItem',
-				action: 'Delete an item from a list',
+				name: 'GetAllListItems',
+				value: 'getAllListItems',
+				action: 'List all items of given list',
+			},
+			{
+				name: 'GetItem',
+				value: 'getItem',
+				action: 'Get an item from a list',
+			},
+			{
+				name: 'GetListDefinition',
+				value: 'getListDefinition',
+				action: 'Get the definition of a list',
 			},
 		],
 		default: 'getListDefinition',
@@ -49,7 +49,7 @@ export const kizeoFormsAdvancedListsOperations: INodeProperties[] = [
 
 const getListDefinitionOperation: INodeProperties[] = [
 	{
-		displayName: 'List ID',
+		displayName: 'List Name or ID',
 		name: 'list',
 		type: 'options',
 		description:
@@ -70,7 +70,7 @@ const getListDefinitionOperation: INodeProperties[] = [
 
 const getItemOperation: INodeProperties[] = [
 	{
-		displayName: 'List ID',
+		displayName: 'List Name or ID',
 		name: 'list',
 		type: 'options',
 		description:
@@ -93,7 +93,6 @@ const getItemOperation: INodeProperties[] = [
 		type: 'string',
 		required: true,
 		default: '',
-		description: 'Item ID',
 		displayOptions: {
 			show: {
 				resource: ['advancedLists'],
@@ -105,7 +104,7 @@ const getItemOperation: INodeProperties[] = [
 
 const createListItemOperation: INodeProperties[] = [
 	{
-		displayName: 'List ID',
+		displayName: 'List Name or ID',
 		name: 'list',
 		type: 'options',
 		description:
@@ -128,7 +127,6 @@ const createListItemOperation: INodeProperties[] = [
 		type: 'string',
 		required: true,
 		default: '',
-		description: 'Item Label',
 		displayOptions: {
 			show: {
 				resource: ['advancedLists'],
@@ -185,7 +183,7 @@ const createListItemOperation: INodeProperties[] = [
 
 const getAllListItemsOperation: INodeProperties[] = [
 	{
-		displayName: 'List ID',
+		displayName: 'List Name or ID',
 		name: 'list',
 		type: 'options',
 		description:
@@ -207,7 +205,6 @@ const getAllListItemsOperation: INodeProperties[] = [
 		name: 'search',
 		type: 'string',
 		description: 'Pattern to search',
-		required: false,
 		default: '',
 		displayOptions: {
 			show: {
@@ -220,8 +217,6 @@ const getAllListItemsOperation: INodeProperties[] = [
 		displayName: 'Offset',
 		name: 'offset',
 		type: 'number',
-		description: 'Offset',
-		required: false,
 		default: '',
 		displayOptions: {
 			show: {
@@ -234,9 +229,11 @@ const getAllListItemsOperation: INodeProperties[] = [
 		displayName: 'Limit',
 		name: 'limit',
 		type: 'number',
-		description: 'Number of items to get',
-		required: false,
-		default: '',
+		typeOptions: {
+			minValue: 1,
+		},
+		description: 'Max number of results to return',
+		default: 50,
 		displayOptions: {
 			show: {
 				resource: ['advancedLists'],
@@ -249,7 +246,6 @@ const getAllListItemsOperation: INodeProperties[] = [
 		name: 'sort',
 		type: 'string',
 		description: 'Target for sorting',
-		required: false,
 		default: '',
 		displayOptions: {
 			show: {
@@ -263,7 +259,6 @@ const getAllListItemsOperation: INodeProperties[] = [
 		name: 'direction',
 		type: 'string',
 		description: 'Sorting: asc or desc',
-		required: false,
 		default: '',
 		displayOptions: {
 			show: {
@@ -276,7 +271,7 @@ const getAllListItemsOperation: INodeProperties[] = [
 
 const editListItemOperation: INodeProperties[] = [
 	{
-		displayName: 'List ID',
+		displayName: 'List Name or ID',
 		name: 'list',
 		type: 'options',
 		description:
@@ -370,7 +365,7 @@ const editListItemOperation: INodeProperties[] = [
 
 const deleteListItemOperation: INodeProperties[] = [
 	{
-		displayName: 'List ID',
+		displayName: 'List Name or ID',
 		name: 'list',
 		type: 'options',
 		description:
