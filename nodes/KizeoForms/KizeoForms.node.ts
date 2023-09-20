@@ -16,10 +16,10 @@ import {
 	kizeoFormsFormDataFields as kizeoFormsFormDataFields,
 	kizeoFormsFormDataOperations,
 } from './KizeoFormsFormDataDescription';
-import {
-	kizeoFormsAdvancedListsFields,
-	kizeoFormsAdvancedListsOperations,
-} from './KizeoFormsAdvancedListsDescription';
+// import {
+// 	kizeoFormsAdvancedListsFields,
+// 	kizeoFormsAdvancedListsOperations,
+// } from './KizeoFormsAdvancedListsDescription';
 import { kizeoFormsFormsFields, kizeoFormsFormsOperations } from './KizeoFormsFormsDescription';
 
 export const endpoint = 'https://forms.kizeo.com/rest/';
