@@ -59,10 +59,10 @@ export class KizeoForms implements INodeType {
 						name: 'Export',
 						value: 'export',
 					},
-					{
-						name: 'Advanced Lists',
-						value: 'advancedLists',
-					},
+					// {
+					// 	name: 'Advanced Lists',
+					// 	value: 'advancedLists',
+					// },
 					{
 						name: 'Forms',
 						value: 'forms',
@@ -74,8 +74,8 @@ export class KizeoForms implements INodeType {
 			...kizeoFormsExportFields,
 			...kizeoFormsFormDataOperations,
 			...kizeoFormsFormDataFields,
-			...kizeoFormsAdvancedListsOperations,
-			...kizeoFormsAdvancedListsFields,
+			// ...kizeoFormsAdvancedListsOperations,
+			// ...kizeoFormsAdvancedListsFields,
 			...kizeoFormsFormsOperations,
 			...kizeoFormsFormsFields,
 		],
