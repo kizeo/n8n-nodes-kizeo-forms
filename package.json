@@ -1,13 +1,13 @@
 {
   "name": "n8n-nodes-kizeo-forms",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "This is an n8n community node. It lets you use Kizeo Forms in your n8n workflows.",
   "keywords": [
     "n8n-community-node-package",
-    "n8n", 
-    "node", 
+    "n8n",
+    "node",
     "forms",
-    "kizeo", 
+    "kizeo",
     "kizeo-forms",
     "kizeoforms",
     "n8n-node"
