@@ -27,7 +27,7 @@ export class KizeoForms implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Kizeo Forms',
 		name: 'kizeoForms',
-		icon: 'file:KizeoForms.png',
+		icon: 'file:KizeoForms.svg',
 		group: ['transform'],
 		version: 2,
 		subtitle: '={{ $parameter["operation"] + ": " + $parameter["resource"] }}',
