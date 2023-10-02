@@ -1,0 +1,10 @@
+FROM node:20
+
+VOLUME /home/node
+
+ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
+ENV PATH="${PATH}:/home/node/.npm-global/bin"
+
+USER node
+
+RUN npm install n8n -g
