@@ -9,7 +9,6 @@ import {
   INodeType,
   INodeTypeDescription,
 } from 'n8n-workflow';
-import { OptionsWithUri } from 'request-promise-native';
 import { kizeoFormsApiRequest } from './GenericFunctions';
 import { kizeoFormsExportFields, kizeoFormsExportOperations } from './KizeoFormsExportDescription';
 import {
@@ -280,7 +279,7 @@ export class KizeoForms implements INodeType {
 
           const apiKey = credentials.apiKey;
 
-          const options: OptionsWithUri = {
+          const options = {
             uri: endpoint + `v3/forms/${formId}/data/${dataId}/pdf?used-with-n8n=`,
             method: 'GET',
             headers: {
@@ -338,7 +337,7 @@ export class KizeoForms implements INodeType {
               Authorization: apiKey,
             };
           }
-          const options: OptionsWithUri = {
+          const options = {
             uri: uri,
             method: 'GET',
             headers: headers,
