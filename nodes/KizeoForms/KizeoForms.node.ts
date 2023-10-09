@@ -23,6 +23,22 @@ import {
 import { kizeoFormsFormsFields, kizeoFormsFormsOperations } from './KizeoFormsFormsDescription';
 
 export const endpoint = 'https://forms.kizeo.com/rest/';
+
+// List of fields not available for push-auto
+const EXCLUDED_FIELDS_TYPE = Object.freeze([
+	'geoloc',
+	'photo',
+	'audio',
+	'paint',
+	'schema',
+	'attached',
+	'signature',
+	'fixed_text',
+	'fixed_image',
+	'fixed_attached',
+	'subform',
+]);
+
 export class KizeoForms implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Kizeo Forms',
@@ -130,33 +146,40 @@ export class KizeoForms implements INodeType {
 			},
 
 			async getFields(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
-				// const usedFields = this.getNodeParameter('fields', 0) as {
-				// 	fields: {
-				// 		field: string;
-				// 		value: string;
-				// 	}[];
-				// };
 				const formId = this.getNodeParameter('form', 0) as string;
 				const { form } = await kizeoFormsApiRequest.call(
 					this,
 					'GET',
 					`v3/forms/${formId}?used-with-n8n=`,
 				);
-				const fields = [];
-				const results: Record<string, any> = form.fields;
+				const fields: Record<string, any> = form.fields;
 
-				for (let i = 0; i < Object.keys(results).length; i++) {
-					const fieldId = Object.keys(results)[i];
+				const filedsAvailable = Object.entries(fields).filter(
+					([key, value]) => !EXCLUDED_FIELDS_TYPE.includes(value.type),
+				);
 
-					// if (Object.values(results)[i].type === 'text' && !usedFields.fields.some(item => item.field === fieldId)) {
-					if (Object.values(results)[i].type === 'text') {
-						fields.push({
-							name: Object.values(results)[i].caption,
-							value: fieldId,
+				return filedsAvailable.reduce((prev: INodePropertyOptions[], [key, value]) => {
+					// If there are sub-fields
+					if ('data' in value) {
+						const subfields: string[] = value.data.split(';');
+
+						subfields.forEach((subfield) => {
+							const [subkey, caption] = subfield.split(':');
+
+							prev.push({
+								name: `${value.caption} - ${caption}`,
+								value: `${key}_${subkey}`,
+							});
+						});
+					} else {
+						prev.push({
+							name: value.caption,
+							value: key,
 						});
 					}
-				}
-				return fields;
+
+					return prev;
+				}, []);
 			},
 			async getList(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
 				const returnData: INodePropertyOptions[] = [];
